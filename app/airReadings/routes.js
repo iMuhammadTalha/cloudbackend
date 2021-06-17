@@ -18,7 +18,7 @@ router.post('/create-reading', createReading, function (req, res) {
     res.send(res.locals.Msg);
 });
 
-router.get('/get-a-recent-reading/:id', getARecentReading, function (req, res) {
+router.get('/get-a-recent-reading', getARecentReading, function (req, res) {
     res.send(res.locals.aReading);
 });
 
