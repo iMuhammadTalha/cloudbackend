@@ -2,7 +2,7 @@ const pool = require('../../config/db/db');
 const config = require('../../config');
 const logger = config.logger.createLogger('AirReading/services');
 
-exports.getAllAirReading = function (result) {
+exports.getAllReading = function (result) {
     const sqlQuery = 'SELECT * FROM "AirReading" ORDER BY created_time DESC';
     try {
         pool.query(sqlQuery, [], (err, res) => {
@@ -18,7 +18,7 @@ exports.getAllAirReading = function (result) {
     }
 };
 
-exports.getALatestAirReading = function (result) {
+exports.getALatestReading = function (result) {
     const sqlQuery = `SELECT * FROM "AirReading" ORDER BY created_time DESC LIMIT 1`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
@@ -34,7 +34,7 @@ exports.getALatestAirReading = function (result) {
     }
 };
 
-exports.getAllAirReadingWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
+exports.getAllReadingWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
     let sortingQuery = ' ORDER BY created_time DESC ';
     if (sortingOrder === 'Undefined' || sortingName === 'Undefined' || sortingOrder === 'undefined' || sortingName === 'undefined') {
         sortingQuery = ' ORDER BY created_time DESC ';
@@ -81,7 +81,7 @@ exports.getAllAirReadingWithPagination = function (page, pageSize, sortingName, 
     }
 };
 
-exports.getAllAirReadingsWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
+exports.getAllReadingsWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
     let sortingQuery = ' ORDER BY created_time DESC ';
     if (sortingOrder === 'Undefined' || sortingName === 'Undefined' || sortingOrder === 'undefined' || sortingName === 'undefined') {
         sortingQuery = ' ORDER BY created_time DESC ';
@@ -128,7 +128,7 @@ exports.getAllAirReadingsWithPagination = function (page, pageSize, sortingName,
     }
 };
 
-exports.getAllAirReading = function getAllAirReading(result) {
+exports.getAllReading = function getAllAirReading(result) {
     const sqlQuery = `SELECT * FROM AirReading  ORDER BY created_time DESC`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
