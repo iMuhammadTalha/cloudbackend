@@ -3,7 +3,7 @@ const {validateMobileAndOTP, validateMobile, validateMobileAndAccessLogin, valid
 
 const router = require('express').Router();
 
-router.post('/admin-login', validateEmailAndPassword, adminLogin, function (req, res) {
+router.post('/admin-login', adminLogin, function (req, res) {
     res.send(res.locals.Msg);
 });
 
