@@ -1,9 +1,9 @@
 const pool = require('../../config/db/db');
 const config = require('../../config');
-const logger = config.logger.createLogger('Reading/services');
+const logger = config.logger.createLogger('AirReading/services');
 
-exports.getAllReading = function (result) {
-    const sqlQuery = 'SELECT * FROM "Reading" ORDER BY created_time DESC';
+exports.getAllAirReading = function (result) {
+    const sqlQuery = 'SELECT * FROM "AirReading" ORDER BY created_time DESC';
     try {
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -18,8 +18,8 @@ exports.getAllReading = function (result) {
     }
 };
 
-exports.getALatestReading = function (result) {
-    const sqlQuery = `SELECT * FROM "Reading" ORDER BY created_time DESC LIMIT 1`;
+exports.getALatestAirReading = function (result) {
+    const sqlQuery = `SELECT * FROM "AirReading" ORDER BY created_time DESC LIMIT 1`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -34,15 +34,15 @@ exports.getALatestReading = function (result) {
     }
 };
 
-exports.getAllReadingWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
+exports.getAllAirReadingWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
     let sortingQuery = ' ORDER BY created_time DESC ';
     if (sortingOrder === 'Undefined' || sortingName === 'Undefined' || sortingOrder === 'undefined' || sortingName === 'undefined') {
         sortingQuery = ' ORDER BY created_time DESC ';
     } else {
         sortingQuery = 'ORDER BY ' + sortingName + ' ' + sortingOrder;
     }
-    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "Reading" ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
-    const sqlCountQuery = `SELECT COUNT(*) as count FROM "Reading" `;
+    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
+    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" `;
 
     try {
         pool.getClient((err, client, release) => {
@@ -81,15 +81,15 @@ exports.getAllReadingWithPagination = function (page, pageSize, sortingName, sor
     }
 };
 
-exports.getAllReadingsWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
+exports.getAllAirReadingsWithPagination = function (page, pageSize, sortingName, sortingOrder, result) {
     let sortingQuery = ' ORDER BY created_time DESC ';
     if (sortingOrder === 'Undefined' || sortingName === 'Undefined' || sortingOrder === 'undefined' || sortingName === 'undefined') {
         sortingQuery = ' ORDER BY created_time DESC ';
     } else {
         sortingQuery = 'ORDER BY ' + sortingName + ' ' + sortingOrder;
     }
-    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "Reading" WHERE node_id=1 ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
-    const sqlCountQuery = `SELECT COUNT(*) as count FROM "Reading" WHERE node_id=1`;
+    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" WHERE node_id=1 ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
+    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" WHERE node_id=1`;
 
     try {
         pool.getClient((err, client, release) => {
@@ -128,8 +128,8 @@ exports.getAllReadingsWithPagination = function (page, pageSize, sortingName, so
     }
 };
 
-exports.getAllReading = function getAllReading(result) {
-    const sqlQuery = `SELECT * FROM Reading  ORDER BY created_time DESC`;
+exports.getAllAirReading = function getAllAirReading(result) {
+    const sqlQuery = `SELECT * FROM AirReading  ORDER BY created_time DESC`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -143,9 +143,9 @@ exports.getAllReading = function getAllReading(result) {
         logger.error(error);
     }
 };
-exports.createReading = function createReading(Reading, result) {
+exports.createAirReading = function createAirReading(AirReading, result) {
     try {
-        const sqlQuery = `INSERT INTO "Reading"(created_time, humidity, latitude, longitude, no2, co2, temperature) VALUES ( '${Reading.created_date}', '${Reading.humidity}', '${Reading.no2}', '${Reading.co2}', '${Reading.temperature}') RETURNING id`;
+        const sqlQuery = `INSERT INTO "AirReading"(created_time, humidity, latitude, longitude, no2, co2, temperature) VALUES ( '${AirReading.created_date}', '${AirReading.humidity}', '${AirReading.no2}', '${AirReading.co2}', '${AirReading.temperature}') RETURNING id`;
 
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -165,7 +165,7 @@ exports.get10lastdates = function(result) {
     try {
         const sqlQuery = `SELECT
             DISTINCT created_time::date AS created_time  
-            FROM public."Reading" 
+            FROM public."AirReading" 
             WHERE created_time > current_date - interval '10' day AND node_id=1 ORDER BY created_time DESC`;
 
         pool.query(sqlQuery, [], (err, res) => {
@@ -184,7 +184,7 @@ exports.get10lastdates = function(result) {
 exports.getAvgValuesdates = function(id, day, result) {
     try {
         const sqlQuery = `SELECT ROUND(AVG(humidity), 2) AS humidity, ROUND(AVG(no2), 2) AS no2, ROUND(AVG(co2), 2) AS co2, ROUND(AVG(temperature), 2) AS temperature
-            FROM public."Reading" 
+            FROM public."AirReading" 
             WHERE created_time::date = current_date - interval '${day}' day AND node_id= '${id}' `;
 
         pool.query(sqlQuery, [], (err, res) => {
@@ -205,7 +205,7 @@ exports.getAvgValuesdatesAsync = function(id, day) {
     return new Promise((resolve, reject) => {
         const sqlQuery = `SELECT ROUND(AVG(humidity), 2) AS humidity, ROUND(AVG(no2), 2) AS no2, ROUND(AVG(co2), 2) AS co2, ROUND(AVG(temperature), 2) AS temperature
                 
-            FROM public."Reading" 
+            FROM public."AirReading" 
             WHERE created_time::date = current_date - interval '${day}' day AND node_id= '${id}' `;
             
         pool.query(sqlQuery, [], function (err, res) {
@@ -220,8 +220,8 @@ exports.getAvgValuesdatesAsync = function(id, day) {
     })
 };
 
-exports.getALatestAirReading = function (result) {
-    const sqlQuery = `SELECT * FROM "AirReading" WHERE node_id=1 ORDER BY created_time DESC`;
+exports.getALatestAirAirReading = function (result) {
+    const sqlQuery = `SELECT * FROM "AirAirReading" WHERE node_id=1 ORDER BY created_time DESC`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
