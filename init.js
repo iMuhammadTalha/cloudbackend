@@ -32,7 +32,7 @@ module.exports.init = async function init() {
         app.use(cookieParser());
         app.use(helmet());
         const cors = function (req, res, next) {
-            const whitelist = ['localhost:3000', 'http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://seecsapptest.herokuapp.com/', 'https://agile-cliffs-90051.herokuapp.com/'];
+            const whitelist = ['localhost:3000', 'http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://20.101.44.78:3003/'];
             const origin = req.headers.origin;
             const host = req.headers.host;
             if (whitelist.indexOf(origin) > -1 || whitelist.indexOf(host) > -1) {
