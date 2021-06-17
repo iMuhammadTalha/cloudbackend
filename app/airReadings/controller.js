@@ -52,6 +52,19 @@ exports.createReading = function (req, res, next) {
 
 };
 
+exports.getARecentReading = function (req, res, next) {
+
+    services.getALatestAirReading(function (err, rows) {
+        if (err) {
+            logger.error(err);
+            return res.status(400).send({msg: 'Error in get all AirReading'});
+        }
+
+    res.locals.aAirReading = rows[0];
+    next();
+    });
+    
+};
 
 exports.getGraph = function (req, res, next) {
     res.locals.GraphData = {

@@ -18,9 +18,9 @@ router.post('/create-reading', createReading, function (req, res) {
     res.send(res.locals.Msg);
 });
 
-// router.get('/get-a-recent-reading/:id', getARecentReading, function (req, res) {
-//     res.send(res.locals.aReading);
-// });
+router.get('/get-a-recent-reading/:id', getARecentReading, function (req, res) {
+    res.send(res.locals.aReading);
+});
 
 router.get('/get-graph/:id', getGraph, function (req, res) {
     res.send(res.locals.AQIGraphData);

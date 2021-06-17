@@ -88,8 +88,8 @@ exports.getAllReadingsWithPagination = function (page, pageSize, sortingName, so
     } else {
         sortingQuery = 'ORDER BY ' + sortingName + ' ' + sortingOrder;
     }
-    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "Reading" ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
-    const sqlCountQuery = `SELECT COUNT(*) as count FROM "Reading" `;
+    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "Reading" WHERE node_id=1 ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
+    const sqlCountQuery = `SELECT COUNT(*) as count FROM "Reading" WHERE node_id=1`;
 
     try {
         pool.getClient((err, client, release) => {
@@ -218,4 +218,20 @@ exports.getAvgValuesdatesAsync = function(id, day) {
             }
         });
     })
+};
+
+exports.getALatestAirReading = function (result) {
+    const sqlQuery = `SELECT * FROM "AirReading" WHERE node_id=1 ORDER BY created_time DESC`;
+    try {
+        pool.query(sqlQuery, [], (err, res) => {
+            if (err) {
+                logger.error('Error: ', err.stack);
+                result(err, null);
+            } else {
+                result(null, res.rows);
+            }
+        });
+    } catch (error) {
+        logger.error(error);
+    }
 };
