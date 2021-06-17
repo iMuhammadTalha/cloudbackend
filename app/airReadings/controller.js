@@ -105,8 +105,7 @@ exports.getGraph = function (req, res, next) {
                 res.locals.GraphData.temperatureAvg = temperatureAvg;
                 res.locals.GraphData.dates = dates;
         
-                res.locals.GraphData.AQIAvg = AQIAvg;
-        
+                
                 next();
     });
 
