@@ -82,7 +82,7 @@ exports.getGraph = function (req, res, next) {
     let dates = [];
 
 
-    services.get10lastdates(req.params.id, async function (err, last10dates) {
+    services.get10lastdates( async function (err, last10dates) {
         if (err) {
             logger.error(err);
             return res.status(400).send({msg: 'Error in get all Reading'});

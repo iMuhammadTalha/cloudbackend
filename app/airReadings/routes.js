@@ -22,7 +22,7 @@ router.get('/get-a-recent-reading', getARecentReading, function (req, res) {
     res.send(res.locals.aReading);
 });
 
-router.get('/get-graph/:id', getGraph, function (req, res) {
+router.get('/get-graph', getGraph, function (req, res) {
     res.send(res.locals.AQIGraphData);
 });
 

@@ -161,12 +161,12 @@ exports.createReading = function createReading(Reading, result) {
 };
 
 
-exports.get10lastdates = function(id, result) {
+exports.get10lastdates = function(result) {
     try {
         const sqlQuery = `SELECT
             DISTINCT created_time::date AS created_time  
             FROM public."Reading" 
-            WHERE created_time > current_date - interval '10' day AND node_id=${id} ORDER BY created_time DESC`;
+            WHERE created_time > current_date - interval '10' day AND node_id=1 ORDER BY created_time DESC`;
 
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
