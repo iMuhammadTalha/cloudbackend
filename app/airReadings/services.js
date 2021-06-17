@@ -88,8 +88,8 @@ exports.getAllReadingsWithPagination = function (page, pageSize, sortingName, so
     } else {
         sortingQuery = 'ORDER BY ' + sortingName + ' ' + sortingOrder;
     }
-    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" WHERE node_id=1 ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
-    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" WHERE node_id=1`;
+    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" WHERE node_id='1' ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
+    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" WHERE node_id='1'`;
 
     try {
         pool.getClient((err, client, release) => {
@@ -166,7 +166,7 @@ exports.get10lastdates = function(result) {
         const sqlQuery = `SELECT
             DISTINCT created_time::date AS created_time  
             FROM public."AirReading" 
-            WHERE created_time > current_date - interval '10' day AND node_id=1 ORDER BY created_time DESC`;
+            WHERE created_time > current_date - interval '10' day AND node_id='1' ORDER BY created_time DESC`;
 
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -185,7 +185,7 @@ exports.getAvgValuesdates = function(id, day, result) {
     try {
         const sqlQuery = `SELECT ROUND(AVG(humidity), 2) AS humidity, ROUND(AVG(no2), 2) AS no2, ROUND(AVG(co2), 2) AS co2, ROUND(AVG(temperature), 2) AS temperature
             FROM public."AirReading" 
-            WHERE created_time::date = current_date - interval '${day}' day AND node_id= '${id}' `;
+            WHERE created_time::date = current_date - interval '${day}' day AND node_id= '1' `;
 
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
@@ -206,7 +206,7 @@ exports.getAvgValuesdatesAsync = function(id, day) {
         const sqlQuery = `SELECT ROUND(AVG(humidity), 2) AS humidity, ROUND(AVG(no2), 2) AS no2, ROUND(AVG(co2), 2) AS co2, ROUND(AVG(temperature), 2) AS temperature
                 
             FROM public."AirReading" 
-            WHERE created_time::date = current_date - interval '${day}' day AND node_id= '${id}' `;
+            WHERE created_time::date = current_date - interval '${day}' day AND node_id= '1' `;
             
         pool.query(sqlQuery, [], function (err, res) {
             if(!err) {
@@ -221,7 +221,7 @@ exports.getAvgValuesdatesAsync = function(id, day) {
 };
 
 exports.getALatestAirAirReading = function (result) {
-    const sqlQuery = `SELECT * FROM "AirAirReading" WHERE node_id=1 ORDER BY created_time DESC`;
+    const sqlQuery = `SELECT * FROM "AirAirReading" WHERE node_id='1' ORDER BY created_time DESC`;
     try {
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
