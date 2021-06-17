@@ -1,0 +1,14 @@
+CREATE TYPE user_type AS ENUM ('admin', 'driver', 'app_user', 'fleet');
+
+CREATE TABLE public.users
+(
+    id bigserial NOT NULL,
+    email text UNIQUE,
+    password text,
+    PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+);
+ALTER TABLE public.users
+    OWNER to postgres;

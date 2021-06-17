@@ -1,0 +1,13 @@
+CREATE TABLE public."Reading"
+(
+    id bigserial NOT NULL,
+    created_time timestamp with time zone,
+    humidity numeric,
+    no2 numeric,
+    co2 numeric,
+    temperature numeric,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE public."Reading"
+    OWNER to postgres;
