@@ -41,8 +41,8 @@ exports.getAllReadingWithPagination = function (page, pageSize, sortingName, sor
     } else {
         sortingQuery = 'ORDER BY ' + sortingName + ' ' + sortingOrder;
     }
-    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" WHERE created_time > '2021-06-15' ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
-    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" WHERE created_time > '2021-06-15' `;
+    const sqlQuery = `SELECT id, humidity, no2, co2, temperature, to_char(created_time , 'YYYY-MM-DD HH24:MI') AS created_time FROM "AirReading" WHERE created_time > '2021-06-15' AND node_id='1' ${sortingQuery} LIMIT ${pageSize} OFFSET ${page * pageSize} `;
+    const sqlCountQuery = `SELECT COUNT(*) as count FROM "AirReading" WHERE created_time > '2021-06-15' AND node_id='1' `;
 
     try {
         pool.getClient((err, client, release) => {
