@@ -61,7 +61,7 @@ exports.getARecentReading = function (req, res, next) {
         }
 
         logger.info(rows[0]);
-    res.locals.aAirReading = rows[0];
+    res.locals.aReading = rows[0];
     next();
     });
     
