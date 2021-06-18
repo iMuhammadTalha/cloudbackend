@@ -60,6 +60,7 @@ exports.getARecentReading = function (req, res, next) {
             return res.status(400).send({msg: 'Error in get all AirReading'});
         }
 
+        logger.info(rows[0]);
     res.locals.aAirReading = rows[0];
     next();
     });
