@@ -23,7 +23,7 @@ router.get('/get-a-recent-reading', getARecentReading, function (req, res) {
 });
 
 router.get('/get-graph', getGraph, function (req, res) {
-    res.send(res.locals.AQIGraphData);
+    res.send(res.locals.GraphData);
 });
 
 module.exports = router;

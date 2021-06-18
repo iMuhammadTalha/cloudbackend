@@ -107,6 +107,7 @@ exports.getGraph = function (req, res, next) {
                 res.locals.GraphData.dates = dates;
         
                 
+                logger.info(res.locals.GraphData);
                 next();
     });
 
