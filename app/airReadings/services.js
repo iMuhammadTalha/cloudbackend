@@ -166,7 +166,7 @@ exports.get10lastdates = function(result) {
         const sqlQuery = `SELECT
             DISTINCT created_time::date AS created_time  
             FROM public."AirReading" 
-            WHERE created_time > current_date - interval '10' day AND node_id='1' ORDER BY created_time DESC`;
+            WHERE created_time > current_date - interval '5' day AND node_id='1' ORDER BY created_time DESC`;
 
         pool.query(sqlQuery, [], (err, res) => {
             if (err) {
