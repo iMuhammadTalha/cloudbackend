@@ -60,7 +60,7 @@ exports.getARecentReading = function (req, res, next) {
             return res.status(400).send({msg: 'Error in get all AirReading'});
         }
 
-        logger.info(rows[0]);
+        // logger.info(rows[0]);
     res.locals.aReading = rows[0];
     next();
     });
@@ -107,7 +107,7 @@ exports.getGraph = function (req, res, next) {
                 res.locals.GraphData.dates = dates;
         
                 
-                logger.info(res.locals.GraphData);
+                // logger.info(res.locals.GraphData);
                 next();
     });
 
